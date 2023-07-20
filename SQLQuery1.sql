@@ -110,4 +110,10 @@ SELECT t1.Team, t1.gold_count, t2.bronze_count, t3.silver_count
 FROM t1
 JOIN t2 ON t1.Team = t2.Team
 JOIN t3 ON t1.Team = t3.Team;
-
+--Percentage increase in female athletes.
+SELECT
+    SUM(CASE WHEN Year = 2000 AND Sex = 'F' THEN 1 ELSE 0 END) AS FemaleCount2000,
+    SUM(CASE WHEN Year = 2016 AND Sex = 'F' THEN 1 ELSE 0 END) AS FemaleCount2016,
+    ROUND(((SUM(CASE WHEN Year = 2016 AND Sex = 'F' THEN 1 ELSE 0 END) - SUM(CASE WHEN Year = 2000 AND Sex = 'F' THEN 1 ELSE 0 END)) * 100.0 / SUM(CASE WHEN Year = 2000 AND Sex = 'F' THEN 1 ELSE 0 END)), 2) AS PercentageIncrease
+FROM
+    olympics.dbo.athlete_events;
